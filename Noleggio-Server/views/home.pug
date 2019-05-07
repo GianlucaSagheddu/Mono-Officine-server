@@ -1,0 +1,39 @@
+doctype html
+html
+  head
+    title Home - Milano Events
+    meta(name='viewport', content='initial-scale=1.0')
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+    // librerie di jQuery
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+    // librerie di Bootstrap
+    script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
+    // librerie per le socket.io
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js')
+    script.
+      $(document).ready(function(){
+        $("#esci").click(function(){
+          location.replace("./logout");
+        });
+      });
+    style.
+      #esci {
+        position:absolute;
+        top:0;
+        right:0;
+      }
+  body
+    button#esci.btn.btn-danger  Esci
+    button#noleggia
+    .container
+      br
+      br
+      button#PMon.btn.btn-primary  Prenota Monopattino
+      br
+      br
+      button#OSco.btn.btn-primary  Offri passaggio in scooter
+      button#PSco.btn.btn-primary  Prenota passaggio in scooter
+      br
+      br
