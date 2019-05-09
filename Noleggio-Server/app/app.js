@@ -11,6 +11,9 @@ var cookieParser = require('cookie-parser');
 var mysql = require("mysql");
 var MongoClient = require('mongodb').MongoClient;
 
+var Client = require('node-rest-client').Client;
+var client = new Client();
+
 //var fs = require('fs');
 //var https = require('https');
 
@@ -41,6 +44,10 @@ app.use(function(req, res, next){
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+
+
+
+//POST REQUESTS
 
 app.post('/utente', function (req, res) {
     var conn = mysql.createConnection({
@@ -83,6 +90,116 @@ app.post('/regutente', function (req, res) {
         });
     });
 });
+
+
+
+
+
+app.post('/segnalaG', function (req, res) {
+
+    var args = {
+        data: {
+            idMezzo: parseInt(req.body.idMezzo),
+            },
+        headers: { "Content-Type": "application/json" }
+    };
+    client.post("", args, function (data, response) {
+        // data contiene le informazioni recuperate dal server REST
+        // response contiene le informazioni riguardanti il protocollo HTTP
+        if (data.n == 1)
+            res.send({message: 'E\' stata inserita una nuova informazione'});
+        else
+            res.send({message: 'Problemi nell\'inserimento'});
+    });
+});
+
+
+
+
+app.post('/noleggiaM', function (req, res) {
+    var args = {
+        data: {
+            idMezzo: parseInt(req.body.idMezzo),
+            },
+        headers: { "Content-Type": "application/json" }
+    };
+    client.post("", args, function (data, response) {
+        // data contiene le informazioni recuperate dal server REST
+        // response contiene le informazioni riguardanti il protocollo HTTP
+        if (data.n == 1)
+            res.send({message: 'E\' stata inserita una nuova informazione'});
+        else
+            res.send({message: 'Problemi nell\'inserimento'});
+    });
+});
+
+
+
+
+
+app.post('/prenotaS', function (req, res) {
+    var args = {
+        data: {
+            idMezzo: parseInt(req.body.idMezzo),
+            Data: req.body.Data,
+            CoordI: req.body.CoordI
+            },
+        headers: { "Content-Type": "application/json" }
+    };
+
+    client.post("", args, function (data, response) {
+        // data contiene le informazioni recuperate dal server REST
+        // response contiene le informazioni riguardanti il protocollo HTTP
+
+        if (data.n == 1)
+            res.send({message: 'E\' stata inserita una nuova informazione'});
+        else
+            res.send({message: 'Problemi nell\'inserimento'});
+    });
+});
+
+
+
+
+
+app.post('/partecipaS', function (req, res) {
+    var args = {
+        data: {
+            idMezzo: parseInt(req.body.idMezzo),
+            Data: req.body.Data,
+            CoordI: req.body.CoordI,
+            CoordF: req.body.CoordF
+            },
+        headers: { "Content-Type": "application/json" }
+    };
+    client.post("", args, function (data, response) {
+        // data contiene le informazioni recuperate dal server REST
+        // response contiene le informazioni riguardanti il protocollo HTTP
+        if (data.n == 1)
+            res.send({message: 'E\' stata inserita una nuova informazione'});
+        else
+            res.send({message: 'Problemi nell\'inserimento'});
+    });
+});
+
+
+
+
+
+//GET REQUESTS
+
+app.get('/visuMezzi', function (req, res) {
+    client.get("", args, function (data, response) {
+        res.send({Mezzi: data});
+    });
+});
+
+app.get('/visuOff', function (req, res) {
+    client.get("", args, function (data, response) {
+        res.send({offerte: data});
+    });
+});
+
 
 
 
