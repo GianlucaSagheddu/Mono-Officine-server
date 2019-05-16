@@ -100,7 +100,8 @@ app.post('/segnalaG', function (req, res) {
 
     var args = {
         data: {
-            idMezzo: parseInt(req.body.idMezzo),
+            idMezzo: parseInt(req.query.idMezzo),
+            Desc: req.query.desc
             },
         headers: { "Content-Type": "application/json" }
     };
@@ -161,7 +162,9 @@ app.post('/prenotaS', function (req, res) {
         data: {
             idMezzo: parseInt(req.body.idMezzo),
             Data: req.body.Data,
-            CoordI: req.body.CoordI
+            CoordI: req.body.CoordI,
+            CoordF: req.body.CoordF,
+            idUtente: req.body.idUtente
             },
         headers: { "Content-Type": "application/json" }
     };
@@ -187,7 +190,8 @@ app.post('/partecipaS', function (req, res) {
             idMezzo: parseInt(req.body.idMezzo),
             Data: req.body.Data,
             CoordI: req.body.CoordI,
-            CoordF: req.body.CoordF
+            idRichiesta: req.body.idRichiesta,
+            idUtente: req.body.idUtente
             },
         headers: { "Content-Type": "application/json" }
     };
