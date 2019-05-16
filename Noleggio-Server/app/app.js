@@ -58,9 +58,10 @@ app.post('/utente', function (req, res) {
     });
     conn.connect(function(err){
         if(err) throw err;
-        conn.query("SELECT ID FROM Utente WHERE Usr = '" + req.body.usr + "' AND Pass = '" + req.body.pass + "'", function(err, resu, fields){
+        conn.query("SELECT ID FROM Utente WHERE Usr = '" + req.query.usr + "' AND Pass = '" + req.query.pass + "'", function(err, resu, fields){
             if(err){ throw err;}
             console.log(req.body);
+            console.log(req.query);
             if(resu.length != 0){
                 res.send([{autorizzazione:"OK", ID: resu}]);
             }else{
