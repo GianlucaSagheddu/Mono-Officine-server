@@ -120,7 +120,7 @@ app.post('/segnalaG', function (req, res) {
 app.post('/noleggiaM', function (req, res) {
     var args = {
         data: {
-            idMezzo: parseInt(req.body.idMezzo),
+            idMezzo: parseInt(req.query.idMezzo),
             },
         headers: { "Content-Type": "application/json" }
     };
@@ -128,9 +128,27 @@ app.post('/noleggiaM', function (req, res) {
         // data contiene le informazioni recuperate dal server REST
         // response contiene le informazioni riguardanti il protocollo HTTP
         if (data.n == 1)
-            res.send({message: 'E\' stata inserita una nuova informazione'});
+            res.send([{message: 'OK'}]);
         else
-            res.send({message: 'Problemi nell\'inserimento'});
+            res.send([{message: 'KO'}]);
+    });
+});
+
+
+app.post('/BloccaM', function (req, res) {
+    var args = {
+        data: {
+            idMezzo: parseInt(req.query.idMezzo),
+            },
+        headers: { "Content-Type": "application/json" }
+    };
+    client.post("", args, function (data, response) {
+        // data contiene le informazioni recuperate dal server REST
+        // response contiene le informazioni riguardanti il protocollo HTTP
+        if (data.n == 1)
+            res.send([{message: 'OK'}]);
+        else
+            res.send([{message: 'KO'}]);
     });
 });
 
