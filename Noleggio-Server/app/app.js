@@ -187,9 +187,6 @@ app.post('/prenotaS', function (req, res) {
 app.post('/partecipaS', function (req, res) {
     var args = {
         data: {
-            idMezzo: parseInt(req.body.idMezzo),
-            Data: req.body.Data,
-            CoordI: req.body.CoordI,
             idRichiesta: req.body.idRichiesta,
             idUtente: req.body.idUtente
             },
