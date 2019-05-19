@@ -97,8 +97,8 @@ app.post('/segnalaG', function (req, res) {
 
     var args = {
         data: {
-            ID: parseInt(req.query.idMezzo),
-            desc: req.query.desc
+            ID: parseInt(req.body.idMezzo),
+            desc: req.body.desc
             },
         headers: { "Content-Type": "application/json" }
     };
@@ -122,11 +122,11 @@ app.post('/segnalaG', function (req, res) {
 app.post('/noleggiaM', function (req, res) {
     var args = {
         data: {
-            idMezzo: parseInt(req.query.idMezzo),
+            IdMezzo: parseInt(req.query.idMezzo),
             },
         headers: { "Content-Type": "application/json" }
     };
-    client.post("https://3000-e39bb563-82a9-49fa-b482-4079d331ce25.ws-eu0.gitpod.io/", args, function (data, response) {
+    client.post("https://3000-e39bb563-82a9-49fa-b482-4079d331ce25.ws-eu0.gitpod.io/NoleggiaMono", args, function (data, response) {
         // data contiene le informazioni recuperate dal server REST
         // response contiene le informazioni riguardanti il protocollo HTTP
         if (data.n == 1)
@@ -140,11 +140,11 @@ app.post('/noleggiaM', function (req, res) {
 app.post('/BloccaM', function (req, res) {
     var args = {
         data: {
-            idMezzo: parseInt(req.query.idMezzo),
+            IdMezzo: parseInt(req.query.idMezzo),
             },
         headers: { "Content-Type": "application/json" }
     };
-    client.post("https://3000-e39bb563-82a9-49fa-b482-4079d331ce25.ws-eu0.gitpod.io/", args, function (data, response) {
+    client.post("https://3000-e39bb563-82a9-49fa-b482-4079d331ce25.ws-eu0.gitpod.io/BloccaMono", args, function (data, response) {
         // data contiene le informazioni recuperate dal server REST
         // response contiene le informazioni riguardanti il protocollo HTTP
         if (data.n == 1)
@@ -161,16 +161,15 @@ app.post('/BloccaM', function (req, res) {
 app.post('/prenotaS', function (req, res) {
     var args = {
         data: {
-            idMezzo: parseInt(req.body.idMezzo),
             Data: req.body.Data,
             CoordI: req.body.CoordI,
             CoordF: req.body.CoordF,
-            idUtente: req.body.idUtente
+            IdUtente: req.body.idUtente
             },
         headers: { "Content-Type": "application/json" }
     };
 
-    client.post("https://3000-e39bb563-82a9-49fa-b482-4079d331ce25.ws-eu0.gitpod.io/", args, function (data, response) {
+    client.post("https://3000-e39bb563-82a9-49fa-b482-4079d331ce25.ws-eu0.gitpod.io/PrenotaS", args, function (data, response) {
         // data contiene le informazioni recuperate dal server REST
         // response contiene le informazioni riguardanti il protocollo HTTP
 
@@ -188,12 +187,12 @@ app.post('/prenotaS', function (req, res) {
 app.post('/partecipaS', function (req, res) {
     var args = {
         data: {
-            idRichiesta: req.body.idRichiesta,
-            idUtente: req.body.idUtente
+            IdRichiesta: req.body.idRichiesta,
+            IdUtente: req.body.idUtente
             },
         headers: { "Content-Type": "application/json" }
     };
-    client.post("https://3000-e39bb563-82a9-49fa-b482-4079d331ce25.ws-eu0.gitpod.io/", args, function (data, response) {
+    client.post("https://3000-e39bb563-82a9-49fa-b482-4079d331ce25.ws-eu0.gitpod.io/PartecipaS", args, function (data, response) {
         // data contiene le informazioni recuperate dal server REST
         // response contiene le informazioni riguardanti il protocollo HTTP
         if (data.n == 1)
@@ -210,13 +209,13 @@ app.post('/partecipaS', function (req, res) {
 //GET REQUESTS
 
 app.get('/visuMezzi', function (req, res) {
-    client.get("https://3000-e39bb563-82a9-49fa-b482-4079d331ce25.ws-eu0.gitpod.io/", args, function (data, response) {
+    client.get("https://3000-e39bb563-82a9-49fa-b482-4079d331ce25.ws-eu0.gitpod.io/GetMezzi", args, function (data, response) {
         res.send({Mezzi: data});
     });
 });
 
 app.get('/visuOff', function (req, res) {
-    client.get("https://3000-e39bb563-82a9-49fa-b482-4079d331ce25.ws-eu0.gitpod.io/", args, function (data, response) {
+    client.get("https://3000-e39bb563-82a9-49fa-b482-4079d331ce25.ws-eu0.gitpod.io/GetOfferte", args, function (data, response) {
         res.send({offerte: data});
     });
 });
