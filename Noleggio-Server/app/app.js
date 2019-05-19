@@ -209,12 +209,14 @@ app.post('/partecipaS', function (req, res) {
 //GET REQUESTS
 
 app.get('/visuMezzi', function (req, res) {
+    var args = {};
     client.get("https://3000-e39bb563-82a9-49fa-b482-4079d331ce25.ws-eu0.gitpod.io/GetMezzi", args, function (data, response) {
         res.send({Mezzi: data});
     });
 });
 
 app.get('/visuOff', function (req, res) {
+    var args = {};
     client.get("https://3000-e39bb563-82a9-49fa-b482-4079d331ce25.ws-eu0.gitpod.io/GetOfferte", args, function (data, response) {
         res.send({offerte: data});
     });
