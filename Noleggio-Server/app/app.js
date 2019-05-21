@@ -97,12 +97,16 @@ app.post('/segnalaG', function (req, res) {
 
     var args = {
         data: {
-            ID: parseInt(req.body.idMezzo),
+            ID: req.body.idMezzo,
             desc: req.body.desc
             },
         headers: { "Content-Type": "application/json" }
     };
     console.log(req.body);
+    console.log(args.data);
+
+    //res.send(req.body);
+
     client.post("https://3000-e39bb563-82a9-49fa-b482-4079d331ce25.ws-eu0.gitpod.io/Segnala", args, function (data, response) {
         // data contiene le informazioni recuperate dal server REST
         // response contiene le informazioni riguardanti il protocollo HTTP
