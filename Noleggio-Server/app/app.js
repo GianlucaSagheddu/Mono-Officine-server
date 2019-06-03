@@ -138,6 +138,23 @@ app.post('/noleggiaM', function (req, res) {
         else
             res.send([{message: 'KO'}]);
     });
+
+    MongoClient.connect('mongodb+srv://Admin:MMkj9Xy0HIEpBmz6@gianluca-0fshc.mongodb.net/test?retryWrites=true,{useNewUrlParser: true}', function(err, db) {
+        if (err) {
+            throw err;
+        }
+        var dbo = db.db("MonoOfficine");
+        var myInfo = { IdMezzo: req.body.idMezzo, IdUtente: req.body.idUtente, DataI: Date.now(), DataF: null, Coord: [{ type: "Feature", geometry: { type: "Point", coordinates: [ parseInt(req.body.Lat), parseInt(req.body.Long) ] } }] };
+        dbo.collection("Noleggi").insertOne(myInfo, function(err, result2) {
+            if (err) throw err;
+            //res.send({n: result2.result.n})
+            db.close();
+        });
+
+
+    });
+
+
 });
 
 
@@ -148,13 +165,29 @@ app.post('/BloccaM', function (req, res) {
             },
         headers: { "Content-Type": "application/json" }
     };
-    client.post("https://3000-e39bb563-82a9-49fa-b482-4079d331ce25.ws-eu0.gitpod.io/BloccaMono", args, function (data, response) {
+    client.put("https://3000-e39bb563-82a9-49fa-b482-4079d331ce25.ws-eu0.gitpod.io/BloccaMono", args, function (data, response) {
         // data contiene le informazioni recuperate dal server REST
         // response contiene le informazioni riguardanti il protocollo HTTP
         if (data.n == 1)
             res.send([{message: 'OK'}]);
         else
             res.send([{message: 'KO'}]);
+    });
+
+    MongoClient.connect('mongodb+srv://Admin:MMkj9Xy0HIEpBmz6@gianluca-0fshc.mongodb.net/test?retryWrites=true,{useNewUrlParser: true}', function(err, db) {
+        if (err) {
+            throw err;
+        }
+
+        var dbo = db.db("MonoOfficine");
+        var myInfo = { IdMezzo: parseInt(req.body.idMezzo), IdUtente:  parseInt(req.body.idUtente), DataF: null};
+        var newData = { $push: {Coord: { type: "Feature", geometry: {tpe:"Point", coordinates: [req.body.Lat, req.body.Long] } } }, $set: { DataF: Date.now() } } ;
+        dbo.collection("Noleggi").updateOne(myInfo, newData, function(err, result) {
+            if (err) throw err;
+
+            //res.send({n: result.result.n})
+            db.close();
+        });
     });
 });
 
@@ -196,7 +229,7 @@ app.post('/partecipaS', function (req, res) {
             },
         headers: { "Content-Type": "application/json" }
     };
-    client.post("https://3000-e39bb563-82a9-49fa-b482-4079d331ce25.ws-eu0.gitpod.io/PartecipaS", args, function (data, response) {
+    client.put("https://3000-e39bb563-82a9-49fa-b482-4079d331ce25.ws-eu0.gitpod.io/PartecipaS", args, function (data, response) {
         // data contiene le informazioni recuperate dal server REST
         // response contiene le informazioni riguardanti il protocollo HTTP
         if (data.n == 1)
