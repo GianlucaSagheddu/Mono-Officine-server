@@ -144,7 +144,7 @@ app.post('/noleggiaM', function (req, res) {
             throw err;
         }
         var dbo = db.db("MonoOfficine");
-        var myInfo = { IdMezzo: req.body.idMezzo, IdUtente: req.body.idUtente, DataI: Date.now(), DataF: null, Coord: [{ type: "Feature", geometry: { type: "Point", coordinates: [ parseInt(req.body.Lat), parseInt(req.body.Long) ] } }] };
+        var myInfo = { IdMezzo: req.body.idMezzo, IdUtente: req.body.idUtente, DataI: new Date(Date.now()), DataF: null, Coord: [{ type: "Feature", geometry: { type: "Point", coordinates: [ parseInt(req.body.Lat), parseInt(req.body.Long) ] } }] };
         dbo.collection("Noleggi").insertOne(myInfo, function(err, result2) {
             if (err) throw err;
             //res.send({n: result2.result.n})
@@ -181,7 +181,7 @@ app.post('/BloccaM', function (req, res) {
 
         var dbo = db.db("MonoOfficine");
         var myInfo = { IdMezzo: parseInt(req.body.idMezzo), IdUtente:  parseInt(req.body.idUtente), DataF: null};
-        var newData = { $push: {Coord: { type: "Feature", geometry: {tpe:"Point", coordinates: [req.body.Lat, req.body.Long] } } }, $set: { DataF: Date.now() } } ;
+        var newData = { $push: {Coord: { type: "Feature", geometry: {tpe:"Point", coordinates: [parseInt(req.body.Lat), parseInt(req.body.Long)] } } }, $set: { DataF: new Date(Date.now()) } } ;
         dbo.collection("Noleggi").updateOne(myInfo, newData, function(err, result) {
             if (err) throw err;
 
