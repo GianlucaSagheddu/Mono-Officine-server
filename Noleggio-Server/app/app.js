@@ -41,6 +41,8 @@ app.use(function(req, res, next){
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+// PER VISUALIZZARE I PARAMETRI DELLA RICHIESTA
+// L'ACCESSO AI PARAMETRI AVVERRA' CON req.query AL POSTO DI req.body
 
 
 
@@ -80,7 +82,7 @@ app.post('/regutente', function (req, res) {
     });
     conn.connect(function(err){
         if(err) throw err;
-        conn.query("INSERT INTO Utente (Nome, Cognome, Usr, Pass, DataN) VALUES ('"+ req.body.Nome +"', '"+ req.body.Cognome +"', '"+ req.body.Usr +"', '"+ req.body.Pass +"', '"+ req.body.Data +"'')", function(err, resu, fields){
+        conn.query("INSERT INTO Utente (Nome, Cognome, Usr, Pass, DataN) VALUES ('"+ req.query.Nome +"', '"+ req.query.Cognome +"', '"+ req.query.Usr +"', '"+ req.query.Pass +"', '"+ req.query.Data +"'')", function(err, resu, fields){
             if(err){ throw err;}
             console.log(resu);
             res.send(resu);
@@ -97,8 +99,8 @@ app.post('/segnalaG', function (req, res) {
 
     var args = {
         data: {
-            ID: req.body.idMezzo,
-            desc: req.body.desc
+            ID: req.query.idMezzo,
+            desc: req.query.desc
             },
         headers: { "Content-Type": "application/json" }
     };
@@ -144,7 +146,7 @@ app.post('/noleggiaM', function (req, res) {
             throw err;
         }
         var dbo = db.db("MonoOfficine");
-        var myInfo = { IdMezzo: req.body.idMezzo, IdUtente: req.body.idUtente, DataI: new Date(Date.now()), DataF: null, Coord: [{ type: "Feature", geometry: { type: "Point", coordinates: [ parseInt(req.body.Lat), parseInt(req.body.Long) ] } }] };
+        var myInfo = { IdMezzo: req.query.idMezzo, IdUtente: req.query.idUtente, DataI: new Date(Date.now()), DataF: null, Coord: [{ type: "Feature", geometry: { type: "Point", coordinates: [ parseInt(req.query.Lat), parseInt(req.query.Long) ] } }] };
         dbo.collection("Noleggi").insertOne(myInfo, function(err, result2) {
             if (err) throw err;
             //res.send({n: result2.result.n})
@@ -180,8 +182,8 @@ app.post('/BloccaM', function (req, res) {
         }
 
         var dbo = db.db("MonoOfficine");
-        var myInfo = { IdMezzo: parseInt(req.body.idMezzo), IdUtente:  parseInt(req.body.idUtente), DataF: null};
-        var newData = { $push: {Coord: { type: "Feature", geometry: {tpe:"Point", coordinates: [parseInt(req.body.Lat), parseInt(req.body.Long)] } } }, $set: { DataF: new Date(Date.now()) } } ;
+        var myInfo = { IdMezzo: parseInt(req.query.idMezzo), IdUtente:  parseInt(req.query.idUtente), DataF: null};
+        var newData = { $push: {Coord: { type: "Feature", geometry: {tpe:"Point", coordinates: [parseInt(req.query.Lat), parseInt(req.query.Long)] } } }, $set: { DataF: new Date(Date.now()) } } ;
         dbo.collection("Noleggi").updateOne(myInfo, newData, function(err, result) {
             if (err) throw err;
 
@@ -198,10 +200,10 @@ app.post('/BloccaM', function (req, res) {
 app.post('/prenotaS', function (req, res) {
     var args = {
         data: {
-            Data: req.body.Data,
-            CoordI: req.body.CoordI,
-            CoordF: req.body.CoordF,
-            IdUtente: req.body.idUtente
+            Data: req.query.Data,
+            CoordI: req.query.CoordI,
+            CoordF: req.query.CoordF,
+            IdUtente: req.query.idUtente
             },
         headers: { "Content-Type": "application/json" }
     };
@@ -224,8 +226,8 @@ app.post('/prenotaS', function (req, res) {
 app.post('/partecipaS', function (req, res) {
     var args = {
         data: {
-            IdRichiesta: req.body.idRichiesta,
-            IdUtente: req.body.idUtente
+            IdRichiesta: req.query.idRichiesta,
+            IdUtente: req.query.idUtente
             },
         headers: { "Content-Type": "application/json" }
     };
