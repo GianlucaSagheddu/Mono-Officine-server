@@ -82,10 +82,10 @@ app.post('/regutente', function (req, res) {
     });
     conn.connect(function(err){
         if(err) throw err;
-        conn.query("INSERT INTO Utente (Nome, Cognome, Usr, Pass, DataN) VALUES ('"+ req.query.Nome +"', '"+ req.query.Cognome +"', '"+ req.query.Usr +"', '"+ req.query.Pass +"', '"+ req.query.Data +"'')", function(err, resu, fields){
+        conn.query("INSERT INTO Utente (Nome, Cognome, Usr, Pass, DataN) VALUES ('"+ req.query.Nome +"', '"+ req.query.Cognome +"', '"+ req.query.Usr +"', '"+ req.query.Pass +"', '"+ req.query.DataN +"')", function(err, resu, fields){
             if(err){ throw err;}
             console.log(resu);
-            res.send(resu);
+            res.send({mess: "OK"});
 
         });
     });
